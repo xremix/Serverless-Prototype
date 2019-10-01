@@ -58,10 +58,6 @@ provider:
   #     exposeHeaders:
   #       - "*"
 
-plugins: # look for additional plugins in the community plugins repo: https://github.com/serverless/plugins
-  - serverless-azure-functions
-
-# you can add packaging information here
 package:
   # include:
   #   - include-me.js
@@ -138,3 +134,6 @@ functions:
   #         topicName: sample-topic # Name of the service bus topic to consume
   #         subscriptionName: sample-subscription # Name of the topic subscription to retrieve from
   #         connection: SERVICE_BUS_CONNECTION # App Setting/environment variable variable which contains Service Bus Namespace Connection String
+
+plugins:
+  - serverless-azure-functions
