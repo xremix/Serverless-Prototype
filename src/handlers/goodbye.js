@@ -4,6 +4,21 @@ module.exports.sayGoodbye = async function(context, req) {
   context.log('JavaScript HTTP trigger function processed a request.');
 
   if (req.query.name || (req.body && req.body.name)) {
+     var promise1 = new Promise(function (resolve, reject) {
+
+         setTimeout(function () {
+           req.query.name = 'this was done async';
+             resolve('foo');
+         }, 1000);
+
+     });
+
+     context.log(promise1);
+
+     // Use await instead of promise.then(...)
+
+     let resolve = await promise1;
+     context.log(resolve);
     context.res = {
       // status: 200, /* Defaults to 200 */
       body: 'Goodbye ' + (req.query.name || req.body.name),
