@@ -14,11 +14,11 @@ module.exports.handler = async function(context, req) {
   var p = new Promise(function (resolve, reject) {
     mongoClient.connect(context, function(err, db, dbo){
       if (err) throw err;
-      var cus = { id: req.body.id };
-      dbo.collection("customers").deleteOne(cus, function(err, result) {
+      var query = { id: Number(req.query.id) };
+      dbo.collection("customers").deleteOne(query, function(err, result) {
         if (err) throw err;
         db.close();
-        resolve(result);
+        resolve({deleted: result.deletedCount});
       });
     });
   });

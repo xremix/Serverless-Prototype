@@ -102,7 +102,7 @@ functions:
       - http: true
         x-azure-settings:
           methods:
-            - POST
+            - DELETE
           authLevel: anonymous
   # The following are a few examples of other events you can configure:
   # storageBlob:

@@ -18,7 +18,7 @@ module.exports.handler = async function(context, req) {
       dbo.collection("customers").insertOne(cus, function(err, result) {
         if (err) throw err;
         db.close();
-        resolve(result);
+        resolve(result.ops[0]);
       });
     });
   });
