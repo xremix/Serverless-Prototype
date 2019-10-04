@@ -17,7 +17,7 @@ module.exports.handler = async function(context, req) {
     name: req.body.name
   };
   try {
-    let resolve = await customerRepo.add(cus, context);
+    let resolve = await customerRepo.update(cus, context);
     context.res = {
       status: 200,
       body: resolve

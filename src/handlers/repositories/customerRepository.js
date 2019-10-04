@@ -34,6 +34,23 @@ var add = function(cus, context) {
   });
 };
 
+var update = function(cus, context) {
+  return mongoClient.getPromiseConnection(context, function(err, db, dbo, resolve, reject){
+    context.log('Am going to update the customer now')
+    if(err){return;}
+    dbo.collection('customers').updateOne(cus, function(err, result) {
+      db.close();
+
+      if (err) {
+        context.log('rejecting');
+        reject(err);
+        return;
+      }
+      resolve(result.ops[0]);
+    });
+  });
+};
+
 var remove = function(id, context) {
   return mongoClient.getPromiseConnection(context, function(err, db, dbo, resolve, reject){
     if(err){return;}
@@ -56,5 +73,6 @@ var remove = function(id, context) {
 };
 
 module.exports.add = add;
+module.exports.update = update;
 module.exports.find = find;
 module.exports.remove = remove;

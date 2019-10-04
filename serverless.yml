@@ -96,6 +96,15 @@ functions:
             - POST
           authLevel: anonymous
 
+  updateCustomer:
+    handler: src/handlers/updateCustomer.handler
+    events:
+      - http: true
+        x-azure-settings:
+          methods:
+            - PUT
+          authLevel: anonymous
+
   deleteCustomer:
     handler: src/handlers/deleteCustomer.handler
     events:
