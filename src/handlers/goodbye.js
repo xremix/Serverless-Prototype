@@ -1,4 +1,5 @@
 'use strict';
+require('dotenv').config()
 
 module.exports.sayGoodbye = async function(context, req) {
   context.log('JavaScript HTTP trigger function processed a request.');
@@ -7,9 +8,9 @@ module.exports.sayGoodbye = async function(context, req) {
      var promise1 = new Promise(function (resolve, reject) {
 
          setTimeout(function () {
-           req.query.name = 'this was done async';
+           req.query.name = 'async ' + req.query.name;
              resolve('foo');
-         }, 1000);
+         }, 10);
 
      });
 

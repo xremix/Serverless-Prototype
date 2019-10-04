@@ -10,7 +10,11 @@
     "azure",
     "serverless"
   ],
-  "dependencies": {},
+  "dependencies": {
+    "dotenv": "^8.1.0",
+    "mongodb": "^3.3.2",
+    "underscore": "^1.9.1"
+  },
   "devDependencies": {
     "serverless-azure-functions": "^1.0.0"
   }
