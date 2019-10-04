@@ -3,7 +3,7 @@ require('dotenv').config()
 var mongoClient = require('./services/mongoService');
 
 module.exports.sayGoodbye = async function(context, req) {
-  context.log('JavaScript HTTP trigger function processed a request.');
+  context.log('Starting sayGoodbye');
 
   // if (!req.query.name && !(req.body && req.body.name)) {
   //   context.res = {

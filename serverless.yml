@@ -78,13 +78,22 @@ functions:
             - GET
           authLevel: anonymous
 
-  goodbye:
-    handler: src/handlers/goodbye.sayGoodbye
+  findCustomers:
+    handler: src/handlers/findCustomers.handler
     events:
       - http: true
         x-azure-settings:
           methods:
             - GET
+          authLevel: anonymous
+
+  addCustomer:
+    handler: src/handlers/addCustomer.handler
+    events:
+      - http: true
+        x-azure-settings:
+          methods:
+            - POST
           authLevel: anonymous
   # The following are a few examples of other events you can configure:
   # storageBlob:
