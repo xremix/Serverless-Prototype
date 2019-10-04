@@ -12,6 +12,7 @@ module.exports.handler = async function(context, req) {
   }
 
   var cus = {
+    _id: req.body.id,
     id: req.body.id,
     name: req.body.name
   };
