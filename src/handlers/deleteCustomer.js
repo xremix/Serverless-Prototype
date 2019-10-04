@@ -1,8 +1,8 @@
 'use strict';
 require('dotenv').config()
-var mongoClient = require('./services/mongoService');
+var customerRepo = require('./repositories/customerRepository');
 
-module.exports.handler = async function(context, req) {
+module.exports.handler = async function (context, req) {
   if (!(req.query.id)) {
     context.res = {
       status: 400,
@@ -11,19 +11,8 @@ module.exports.handler = async function(context, req) {
     return;
   }
 
-  var p = new Promise(function (resolve, reject) {
-    mongoClient.connect(context, function(err, db, dbo){
-      if (err) throw err;
-      var query = { id: Number(req.query.id) };
-      dbo.collection("customers").deleteOne(query, function(err, result) {
-        if (err) throw err;
-        db.close();
-        resolve({deleted: result.deletedCount});
-      });
-    });
-  });
+  let resolve = await customerRepo.remove(Number(req.query.id), context);
 
-  let resolve = await p;
   context.res = {
     status: 200,
     body: resolve
