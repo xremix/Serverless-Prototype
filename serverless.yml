@@ -103,7 +103,6 @@ functions:
         x-azure-settings:
           methods:
             - POST
-            - PUT
           authLevel: anonymous
 
   deleteCustomer:

@@ -168,6 +168,10 @@
   var self = this;
   var baseUrl = "https://sls-wus2-dev-serverless-prototype.azurewebsites.net";
 
+  function findCustomerById(id){
+    return customers.filter(c => c.id == id)[0];
+  }
+
   function loadCustomers(){
     $.get( baseUrl + "/api/findCustomers", function( data ) {
       data = JSON.parse(data);
@@ -213,7 +217,9 @@
   }
 
   function loadUpdateCustomer(id){
-    document.querySelector('#updateForm #inputID').value = id;
+    var customer = findCustomerById(id);
+    document.querySelector('#updateForm #inputID').value = customer.id;
+    document.querySelector('#updateForm #inputName').value = customer.name;
   }
 
   function updateCustomer(){
