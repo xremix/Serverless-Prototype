@@ -17,6 +17,7 @@ module.exports.handler = async function(context, req) {
     name: req.body.name
   };
   try {
+    context.log('Recieved data for update ' + cus);
     let resolve = await customerRepo.update(cus, context);
     context.res = {
       status: 200,

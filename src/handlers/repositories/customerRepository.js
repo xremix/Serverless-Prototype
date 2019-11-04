@@ -35,6 +35,7 @@ var add = function(cus, context) {
 };
 
 var update = function(cus, context) {
+  context.log('starting update of ' + cus);
   return mongoClient.getPromiseConnection(context, function(err, db, dbo, resolve, reject){
     context.log('Am going to update the customer now')
     if(err){return;}
