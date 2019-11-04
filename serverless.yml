@@ -102,6 +102,7 @@ functions:
       - http: true
         x-azure-settings:
           methods:
+            - POST
             - PUT
           authLevel: anonymous
 

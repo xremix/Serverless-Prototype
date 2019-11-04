@@ -225,7 +225,7 @@
 
     $.ajax({
       url: baseUrl + '/api/updateCustomer',
-      type : "PUT",
+      type : "POST",
       dataType : 'json',
       data : JSON.stringify(body),
       success : function(result) {
