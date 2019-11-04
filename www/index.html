@@ -196,7 +196,7 @@
 
   function createCustomer(){
     var body = {
-      id: document.querySelector('#createForm #inputID').value,
+      id: parseInt(document.querySelector('#createForm #inputID').value),
       name: document.querySelector('#createForm #inputName').value
     }
 
@@ -224,7 +224,7 @@
 
   function updateCustomer(){
     var body = {
-      id: document.querySelector('#updateForm #inputID').value,
+      id: parseInt(document.querySelector('#updateForm #inputID').value),
       name: document.querySelector('#updateForm #inputName').value
     }
 
