@@ -1,20 +1,20 @@
 'use strict';
 require('dotenv').config()
-var customerRepo = require('./repositories/customerRepository');
+var functionService = require('./services/functionService');
 
 module.exports.handler = async function(context, req) {
-  context.log('Starting findCustomers');
-  try {
-    let resolve = await customerRepo.find(context);
+  functionService.callFunction(context, function(data){
+    // success
     context.res = {
       status: 200,
-      body: resolve
-    };
-  } catch (error) {
+      body: data
+    }
+  },
+  function(error){
+    // Error
     context.res = {
       status: 500,
       body: error
     };
-  }
-
+  });
 };
