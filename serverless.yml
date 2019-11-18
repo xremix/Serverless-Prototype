@@ -87,6 +87,16 @@ functions:
             - GET
           authLevel: anonymous
 
+
+  allCustomers:
+    handler: src/handlers/allCustomers.handler
+    events:
+      - http: true
+      x-azure-settings:
+        methods:
+          - GET
+          authLevel: anonymous
+
   addCustomer:
     handler: src/handlers/addCustomer.handler
     events:
