@@ -92,9 +92,9 @@ functions:
     handler: src/handlers/allCustomers.handler
     events:
       - http: true
-      x-azure-settings:
-        methods:
-          - GET
+        x-azure-settings:
+          methods:
+            - GET
           authLevel: anonymous
 
   addCustomer:
