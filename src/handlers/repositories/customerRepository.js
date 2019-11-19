@@ -3,7 +3,11 @@ var mongoClient = require('../services/mongoService');
 
 var find = function(context) {
   return mongoClient.getPromiseConnection(context, function(err, db, dbo, resolve, reject){
-    if(err){return;}
+    if(err){
+      context.log('error');
+      reject(err);
+      return;
+    }
     dbo.collection('customers').find({}).toArray(function(err, result) {
       db.close();
 
@@ -20,7 +24,11 @@ var find = function(context) {
 
 var add = function(cus, context) {
   return mongoClient.getPromiseConnection(context, function(err, db, dbo, resolve, reject){
-    if(err){return;}
+    if(err){
+      context.log('error');
+      reject(err);
+      return;
+    }
     dbo.collection('customers').insertOne(cus, function(err, result) {
       db.close();
 
@@ -37,13 +45,19 @@ var add = function(cus, context) {
 var update = function(cus, context) {
   context.log('starting update of ' + cus);
   return mongoClient.getPromiseConnection(context, function(err, db, dbo, resolve, reject){
+    context.log('got the connection')
+    if(err){
+      context.log('error');
+      reject(err);
+      return;
+    }
     context.log('Am going to update the customer now')
-    if(err){return;}
-    dbo.collection('customers').updateOne(cus, function(err, result) {
+    dbo.collection('customers').updateOne({id: cus.id}, cus, null, function(err, result) {
       db.close();
 
       if (err) {
         context.log('rejecting');
+        context.error(err);
         reject(err);
         return;
       }
