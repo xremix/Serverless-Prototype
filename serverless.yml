@@ -106,15 +106,6 @@ functions:
             - POST
           authLevel: anonymous
 
-  updateCustomer:
-    handler: src/handlers/updateCustomer.handler
-    events:
-      - http: true
-        x-azure-settings:
-          methods:
-            - POST
-          authLevel: anonymous
-
   deleteCustomer:
     handler: src/handlers/deleteCustomer.handler
     events:
@@ -122,6 +113,16 @@ functions:
         x-azure-settings:
           methods:
             - DELETE
+          authLevel: anonymous
+
+
+  editCustomer:
+    handler: src/handlers/editCustomer.handler
+    events:
+      - http: true
+        x-azure-settings:
+          methods:
+            - POST
           authLevel: anonymous
   # The following are a few examples of other events you can configure:
   # storageBlob:

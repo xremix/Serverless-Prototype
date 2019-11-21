@@ -173,7 +173,7 @@
   }
 
   function loadCustomers(){
-    $.get( baseUrl + "/api/findCustomers", function( data ) {
+    $.get( baseUrl + "/api/allCustomers", function( data ) {
       data = JSON.parse(data);
       console.log(data);
 
@@ -230,7 +230,7 @@
 
 
     $.ajax({
-      url: baseUrl + '/api/updateCustomer',
+      url: baseUrl + '/api/editCustomer',
       type : "POST",
       dataType : 'json',
       data : JSON.stringify(body),

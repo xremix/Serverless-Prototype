@@ -6,7 +6,7 @@ module.exports.sayHello = async function (context, req) {
   if (req.query.name || (req.body && req.body.name)) {
     context.res = {
       // status: 200, /* Defaults to 200 */
-      body: 'Hello ' + (req.query.name || req.body.name),
+      body: 'Hello ' + (req.query.name || req.body.name) + '. This is Version 0.4.3',
     };
   } else {
     context.res = {
