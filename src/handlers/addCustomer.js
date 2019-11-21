@@ -11,11 +11,8 @@ module.exports.handler = async function(context, req) {
     return;
   }
 
-  var cus = {
-    _id: req.body.id,
-    id: req.body.id,
-    name: req.body.name
-  };
+  var cus = customerRepo.requestToModel(req.body);
+  
   try {
     let resolve = await customerRepo.add(cus, context);
     context.res = {

@@ -12,11 +12,7 @@ module.exports.handler = async function (context, req) {
     return;
   }
 
-  var cus = {
-    _id: req.body.id,
-    id: req.body.id,
-    name: req.body.name
-  };
+var cus = customerRepo.requestToModel(req.body);
 
   context.log('[editCustomer] created customer, going to edit now');
 

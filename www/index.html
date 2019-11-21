@@ -102,6 +102,30 @@
               <input type="text" class="form-control" id="inputName" placeholder="Customer Name">
             </div>
           </div>
+          <div class="form-group row">
+            <label class="col-sm-2 col-form-label">Address</label>
+            <div class="col-sm-10">
+              <input type="text" class="form-control" id="inputAddress" placeholder="Customer Address">
+            </div>
+          </div>
+          <div class="form-group row">
+            <label class="col-sm-2 col-form-label">City</label>
+            <div class="col-sm-10">
+              <input type="text" class="form-control" id="inputCity" placeholder="Customer City">
+            </div>
+          </div>
+          <div class="form-group row">
+            <label class="col-sm-2 col-form-label">Zip</label>
+            <div class="col-sm-10">
+              <input type="text" class="form-control" id="inputZip" placeholder="Customer Zip">
+            </div>
+          </div>
+          <div class="form-group row">
+            <label class="col-sm-2 col-form-label">Country</label>
+            <div class="col-sm-10">
+              <input type="text" class="form-control" id="inputCountry" placeholder="Customer Country">
+            </div>
+          </div>
         </form>
 
 
@@ -139,6 +163,30 @@
             <label class="col-sm-2 col-form-label">Name</label>
             <div class="col-sm-10">
               <input type="text" class="form-control" id="inputName" placeholder="Customer Name">
+            </div>
+          </div>
+          <div class="form-group row">
+            <label class="col-sm-2 col-form-label">Address</label>
+            <div class="col-sm-10">
+              <input type="text" class="form-control" id="inputAddress" placeholder="Customer Address">
+            </div>
+          </div>
+          <div class="form-group row">
+            <label class="col-sm-2 col-form-label">City</label>
+            <div class="col-sm-10">
+              <input type="text" class="form-control" id="inputCity" placeholder="Customer City">
+            </div>
+          </div>
+          <div class="form-group row">
+            <label class="col-sm-2 col-form-label">Zip</label>
+            <div class="col-sm-10">
+              <input type="text" class="form-control" id="inputZip" placeholder="Customer Zip">
+            </div>
+          </div>
+          <div class="form-group row">
+            <label class="col-sm-2 col-form-label">Country</label>
+            <div class="col-sm-10">
+              <input type="text" class="form-control" id="inputCountry" placeholder="Customer Country">
             </div>
           </div>
         </form>
@@ -183,7 +231,7 @@
         <p>
           <b>${c.id} - ${c.name}</b> <br/>
           <button class="btn btn-sm btn-primary" data-toggle="modal" data-target="#updateModal" onclick='loadUpdateCustomer(${c.id})'><i class="fa fa-pencil"></i></button>
-          <button class="btn btn-sm btn-warning" onclick='deleteCustomer(${c.id})'><i class="fa fa-trash"></i></button>
+          <button class="btn btn-sm btn-danger" onclick='deleteCustomer(${c.id})'><i class="fa fa-trash"></i></button>
         </p>
       </li>
       `).join('');
@@ -197,7 +245,11 @@
   function createCustomer(){
     var body = {
       id: parseInt(document.querySelector('#createForm #inputID').value),
-      name: document.querySelector('#createForm #inputName').value
+      name: document.querySelector('#createForm #inputName').value,
+      address: document.querySelector('#createForm #inputAddress').value,
+      city: document.querySelector('#createForm #inputCity').value,
+      zip: document.querySelector('#createForm #inputZip').value,
+      country: document.querySelector('#createForm #inputCountry').value
     }
 
 
@@ -220,14 +272,21 @@
     var customer = findCustomerById(id);
     document.querySelector('#updateForm #inputID').value = customer.id;
     document.querySelector('#updateForm #inputName').value = customer.name;
+    document.querySelector('#updateForm #inputAddress').value = customer.address;
+    document.querySelector('#updateForm #inputCity').value = customer.city;
+    document.querySelector('#updateForm #inputZip').value = customer.zip;
+    document.querySelector('#updateForm #inputCountry').value = customer.country;
   }
 
   function updateCustomer(){
     var body = {
       id: parseInt(document.querySelector('#updateForm #inputID').value),
-      name: document.querySelector('#updateForm #inputName').value
+      name: document.querySelector('#updateForm #inputName').value,
+      address: document.querySelector('#updateForm #inputAddress').value,
+      city: document.querySelector('#updateForm #inputCity').value,
+      zip: document.querySelector('#updateForm #inputZip').value,
+      country: document.querySelector('#updateForm #inputCountry').value,
     }
-
 
     $.ajax({
       url: baseUrl + '/api/editCustomer',
@@ -243,6 +302,7 @@
       }
     });
   }
+  
   function deleteCustomer(id){
     $.ajax({
       url: baseUrl + '/api/deleteCustomer?id='+id,

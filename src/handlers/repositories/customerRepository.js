@@ -1,6 +1,19 @@
 'use strict';
 var mongoClient = require('../services/mongoService');
 
+var requestToModel = function(body){
+  var cus = {
+    _id: body.id,
+    id: body.id,
+    name: body.name,
+    address: body.address,
+    city: body.city,
+    zip: body.zip,
+    country: body.country
+  };
+  return cus;
+}
+
 var find = function(context) {
   return mongoClient.getPromiseConnection(context, function(err, db, dbo, resolve, reject){
     if(err){
@@ -91,3 +104,4 @@ module.exports.add = add;
 module.exports.update = update;
 module.exports.find = find;
 module.exports.remove = remove;
+module.exports.requestToModel = requestToModel;
