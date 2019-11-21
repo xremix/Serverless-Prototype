@@ -55,7 +55,7 @@ var add = function(cus, context) {
   });
 };
 
-var update = function(cus, context) {
+var edit = function(cus, context) {
   context.log('starting update of ' + cus);
   return mongoClient.getPromiseConnection(context, function(err, db, dbo, resolve, reject){
     context.log('got the connection')
@@ -101,7 +101,7 @@ var remove = function(id, context) {
 };
 
 module.exports.add = add;
-module.exports.update = update;
+module.exports.edit = edit;
 module.exports.find = find;
 module.exports.remove = remove;
 module.exports.requestToModel = requestToModel;
