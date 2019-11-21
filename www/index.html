@@ -264,6 +264,7 @@
       },
       error: function(xhr, resp, text) {
         console.log(xhr, resp, text);
+        alert(text);
       }
     });
   }
@@ -299,10 +300,11 @@
       },
       error: function(xhr, resp, text) {
         console.log(xhr, resp, text);
+        alert(text);
       }
     });
   }
-  
+
   function deleteCustomer(id){
     $.ajax({
       url: baseUrl + '/api/deleteCustomer?id='+id,
@@ -314,6 +316,7 @@
       },
       error: function(xhr, resp, text) {
         console.log(xhr, resp, text);
+        alert(text);
       }
     });
   }

@@ -64,44 +64,52 @@ var edit = function(cus, context) {
       reject(err);
       return;
     }
-    context.log('Am going to update the customer now')
-    dbo.collection('customers').updateOne({id: cus.id}, cus, null, function(err, result) {
-      db.close();
+    context.log('Am going to update the customer now');
+    context.log(cus);
+    dbo.collection('customers').findAndModify(
+      {"_id": cus.id},
+      {"$set":cus},
+      function(err, result) {
+        context.log('findAndModify called');
+        db.close();
 
-      if (err) {
-        context.log('rejecting');
-        context.error(err);
-        reject(err);
-        return;
-      }
-      resolve(result.ops[0]);
-    });
-  });
-};
-
-var remove = function(id, context) {
-  return mongoClient.getPromiseConnection(context, function(err, db, dbo, resolve, reject){
-    if(err){return;}
-    var query = {
-      _id: id
-    };
-    dbo.collection('customers').deleteOne(query, function(err, result) {
-      db.close();
-
-      if (err) {
-        context.log('rejecting');
-        reject(err);
-        return;
-      }
-      resolve({
-        deletedCount: result.deletedCount
+        if (err) {
+          context.log('rejecting because of error');
+          context.log(err);
+          context.error(err);
+          reject(err);
+          return;
+        }
+        context.log('findAndModify was a success');
+        context.log(result);
+        resolve(result.ops[0]);
       });
     });
-  });
-};
+  };
 
-module.exports.add = add;
-module.exports.edit = edit;
-module.exports.find = find;
-module.exports.remove = remove;
-module.exports.requestToModel = requestToModel;
+  var remove = function(id, context) {
+    return mongoClient.getPromiseConnection(context, function(err, db, dbo, resolve, reject){
+      if(err){return;}
+      var query = {
+        _id: id
+      };
+      dbo.collection('customers').deleteOne(query, function(err, result) {
+        db.close();
+
+        if (err) {
+          context.log('rejecting');
+          reject(err);
+          return;
+        }
+        resolve({
+          deletedCount: result.deletedCount
+        });
+      });
+    });
+  };
+
+  module.exports.add = add;
+  module.exports.edit = edit;
+  module.exports.find = find;
+  module.exports.remove = remove;
+  module.exports.requestToModel = requestToModel;

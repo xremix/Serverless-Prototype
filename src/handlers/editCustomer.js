@@ -12,14 +12,22 @@ module.exports.handler = async function (context, req) {
     return;
   }
 
-var cus = customerRepo.requestToModel(req.body);
+  var cus = customerRepo.requestToModel(req.body);
 
   context.log('[editCustomer] created customer, going to edit now');
+  try {
+    let resolve = await customerRepo.edit(cus, context);
 
-  let resolve = await customerRepo.edit(cus, context);
-
-  context.res = {
-    status: 200,
-    body: resolve
-  };
+    context.res = {
+      status: 200,
+      body: resolve
+    };
+  }catch(error){
+    context.log('Error occured while updating the customer');
+    context.log(error);
+    context.res = {
+      status: 500,
+      body: error
+    };
+  }
 };

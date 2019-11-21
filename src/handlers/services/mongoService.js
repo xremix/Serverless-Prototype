@@ -31,9 +31,5 @@ exports.getPromiseConnection = function (context, callback){
       }
       callback(err, db, dbo, resolve, reject);
     });
-
-
-
-
   });
 };
