@@ -21,7 +21,9 @@ var find = function(context) {
       reject(err);
       return;
     }
-    dbo.collection('customers').find({}).toArray(function(err, result) {
+
+    var idSort = { id: 1 };
+    dbo.collection('customers').find({}).sort(idSort).toArray(function(err, result) {
       db.close();
 
       if (err) {
@@ -67,9 +69,11 @@ var edit = function(cus, context) {
     context.log('Am going to update the customer now');
     context.log(cus);
     dbo.collection('customers').findAndModify(
-      {"_id": cus.id},
-      {"$set":cus},
-      function(err, result) {
+      {'_id': cus.id}, // query
+      [['_id','asc']],  // sort order
+      {$set: cus}, // replacement, replaces only the field "hi"
+      {}, // options
+      function(err, object) {
         context.log('findAndModify called');
         db.close();
 
@@ -86,7 +90,7 @@ var edit = function(cus, context) {
       });
     });
   };
-
+  
   var remove = function(id, context) {
     return mongoClient.getPromiseConnection(context, function(err, db, dbo, resolve, reject){
       if(err){return;}
