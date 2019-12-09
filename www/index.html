@@ -8,12 +8,27 @@
   <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
   <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
   <style type="text/css">
-    body{
-      color:#333333;
-    }
-    .customer-list {
-      list-style: none;
-    }
+  body{
+    color:#333333;
+  }
+  .customer-list {
+    list-style: none;
+  }
+  #loading-modal{
+    background-color: rgba(0,0,0,0.5);
+    color:white;
+    text-align: center;
+    position: absolute;
+    height: auto;
+    z-index: 999999;
+    top:0;
+    bottom:0;
+    right:0;
+    left:0;
+  }
+  #loading-modal .content{
+    margin-top: 50vh;
+  }
   </style>
 </head>
 <body>
@@ -22,7 +37,7 @@
   <nav class="navbar navbar-expand-lg navbar-light bg-light">
     <div class="container">
 
-      <a class="navbar-brand" href="#">SAP Customer Portal</a>
+      <a class="navbar-brand" href="#">Serverless Customer Portal</a>
       <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
         <span class="navbar-toggler-icon"></span>
       </button>
@@ -38,8 +53,8 @@
               Customers
             </a>
             <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+              <a class="dropdown-item" href="index.html">Refresh</a>
               <a class="dropdown-item" href="#" data-toggle="modal" data-target="#createModal">Create</a>
-              <a class="dropdown-item" href="#" data-toggle="modal" data-target="#deleteModal">Delete</a>
               <div class="dropdown-divider"></div>
               <form class="dropdown-item form-inline my-2 my-lg-0">
                 <input class="form-control mr-sm-2" type="search" id="search" placeholder="Search" aria-label="Search">
@@ -47,18 +62,14 @@
               </form>
             </div>
           </li>
-          <!-- <li class="nav-item">
-          <a class="nav-link" target="_blank" href="https://github.com/xremix/Serverless-Prototype">Repository</a>
-        </li> -->
-      </ul>
-      <!-- <form class="form-inline my-2 my-lg-0">
-      <input class="form-control mr-sm-2" type="search" id="search" placeholder="Search" aria-label="Search">
-      <button class="btn btn-outline-success my-2 my-sm-0" id="search-button" type="submit" onclick="search">Search</button>
-    </form> -->
+        </ul>
+        <!-- <form class="form-inline my-2 my-lg-0">
+        <input class="form-control mr-sm-2" type="search" id="search" placeholder="Search" aria-label="Search">
+        <button class="btn btn-outline-success my-2 my-sm-0" id="search-button" type="submit" onclick="search">Search</button>
+      </form> -->
+    </div>
   </div>
-</div>
 </nav>
-
 
 <!-- Body -->
 <div class="container mt-5">
@@ -87,8 +98,6 @@
         </button>
       </div>
       <div class="modal-body">
-
-
         <form id="createForm">
           <div class="form-group row">
             <label class="col-sm-2 col-form-label">ID</label>
@@ -127,8 +136,6 @@
             </div>
           </div>
         </form>
-
-
       </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-success" id="order-button" onclick="createCustomer()">Create</button>
@@ -137,7 +144,6 @@
     </div>
   </div>
 </div>
-
 
 <!-- Update Modal -->
 <div class="modal fade" id="updateModal" tabindex="-1" role="dialog" aria-hidden="true">
@@ -150,7 +156,6 @@
         </button>
       </div>
       <div class="modal-body">
-
 
         <form id="updateForm">
           <div class="form-group row">
@@ -201,8 +206,14 @@
   </div>
 </div>
 
-
-
+<div id="loading-modal" style="display:none">
+  <div class="content">
+    <p class="text-center" style="font-size:1.5em">
+      <i class="fa fa-spinner fa-spin" style="font-size:5em; color:#aaa;"></i><br/>
+      <b>Loading...</b><br/>
+    </p>
+  </div>
+</div>
 
 
 <script src="https://code.jquery.com/jquery-3.4.1.min.js" integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo=" crossorigin="anonymous"></script>
@@ -210,29 +221,36 @@
 <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
 
 <script type="text/javascript">
-  "use strict";
-  // Declarations
-  var customers = [];
-  var self = this;
-  var baseUrl = "https://sls-wus2-dev-serverless-prototype.azurewebsites.net";
+"use strict";
+// Declarations
+var customers = [];
+var self = this;
+var baseUrl = "https://sls-wus2-dev-serverless-prototype.azurewebsites.net";
 
-  function findCustomerById(id){
-    return customers.filter(c => c.id == id)[0];
-  }
+function showLoadingIndicator(){
+  $('#loading-modal').css('display', 'block');
+}
+function hideLoadingIndicator(){
+  $('#loading-modal').css('display', 'none');
+}
 
-  function loadCustomers(){
-    $.get( baseUrl + "/api/allCustomers", function( data ) {
-      data = JSON.parse(data);
-      console.log(data);
+function findCustomerById(id){
+  return customers.filter(c => c.id == id)[0];
+}
 
-      customers = data;
-      var html = data.map(c => `
+function loadCustomers(){
+  $.get( baseUrl + "/api/allCustomers", function( data ) {
+    data = JSON.parse(data);
+    console.log(data);
+
+    customers = data;
+    var html = data.map(c => `
       <li>
-        <p>
-          <b>${c.id} - ${c.name}</b> <br/>
-          <button class="btn btn-sm btn-primary" data-toggle="modal" data-target="#updateModal" onclick='loadUpdateCustomer(${c.id})'><i class="fa fa-pencil"></i></button>
-          <button class="btn btn-sm btn-danger" onclick='deleteCustomer(${c.id})'><i class="fa fa-trash"></i></button>
-        </p>
+      <p>
+      <b>${c.id} - ${c.name}</b> <br/>
+      <button class="btn btn-sm btn-primary" data-toggle="modal" data-target="#updateModal" onclick='loadUpdateCustomer(${c.id})'><i class="fa fa-pencil"></i></button>
+      <button class="btn btn-sm btn-danger" onclick='deleteCustomer(${c.id})'><i class="fa fa-trash"></i></button>
+      </p>
       </li>
       `).join('');
       console.log(html);
@@ -240,7 +258,6 @@
     });
 
   }
-
 
   function createCustomer(){
     var body = {
@@ -252,17 +269,27 @@
       country: document.querySelector('#createForm #inputCountry').value
     }
 
+    if(!body.id || !body.name || !body.address || !body.city || !body.zip || !body.country){
+      alert("Please fill in all fields");
+      return;
+    }
 
+    showLoadingIndicator();
     $.ajax({
       url: baseUrl + '/api/addCustomer',
       type : "POST",
       dataType : 'json',
       data : JSON.stringify(body),
       success : function(result) {
-        alert('Success');
+        $('#createModal').modal('hide');
+        hideLoadingIndicator();
+        // alert('Success');
         console.log(result);
+        location.reload();
       },
       error: function(xhr, resp, text) {
+        $('#createModal').modal('hide');
+        hideLoadingIndicator();
         console.log(xhr, resp, text);
         alert(text);
       }
@@ -289,16 +316,22 @@
       country: document.querySelector('#updateForm #inputCountry').value,
     }
 
+    showLoadingIndicator();
     $.ajax({
       url: baseUrl + '/api/editCustomer',
       type : "POST",
       dataType : 'json',
       data : JSON.stringify(body),
       success : function(result) {
-        alert('Success');
+        $('#updateModal').modal('hide');
+        hideLoadingIndicator();
+        // alert('Success');
         console.log(result);
+        location.reload();
       },
       error: function(xhr, resp, text) {
+        $('#updateModal').modal('hide');
+        hideLoadingIndicator();
         console.log(xhr, resp, text);
         alert(text);
       }
@@ -306,15 +339,18 @@
   }
 
   function deleteCustomer(id){
+    showLoadingIndicator();
     $.ajax({
       url: baseUrl + '/api/deleteCustomer?id='+id,
       type : "DELETE",
       dataType : 'json',
       success : function(result) {
-        alert('Success');
+        hideLoadingIndicator();
         console.log(result);
+        location.reload();
       },
       error: function(xhr, resp, text) {
+        hideLoadingIndicator();
         console.log(xhr, resp, text);
         alert(text);
       }
