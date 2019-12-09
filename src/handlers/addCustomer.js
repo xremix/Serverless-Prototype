@@ -12,12 +12,12 @@ module.exports.handler = async function(context, req) {
   }
 
   var cus = customerRepo.requestToModel(req.body);
-  
+
   try {
-    let resolve = await customerRepo.add(cus, context);
+    let result = await customerRepo.add(cus, context);
     context.res = {
       status: 200,
-      body: resolve
+      body: result
     };
   } catch (error) {
     context.res = {

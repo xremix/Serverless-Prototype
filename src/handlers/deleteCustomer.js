@@ -11,10 +11,10 @@ module.exports.handler = async function (context, req) {
     return;
   }
 
-  let resolve = await customerRepo.remove(Number(req.query.id), context);
+  let result = await customerRepo.remove(Number(req.query.id), context);
 
   context.res = {
     status: 200,
-    body: resolve
+    body: result
   };
 };

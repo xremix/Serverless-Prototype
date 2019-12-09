@@ -5,10 +5,10 @@ var customerRepo = require('./repositories/customerRepository');
 module.exports.handler = async function(context, req) {
   context.log('Starting all customers');
   try {
-    let resolve = await customerRepo.find(context);
+    let result = await customerRepo.find(context);
     context.res = {
       status: 200,
-      body: resolve
+      body: result
     };
   } catch (error) {
     context.res = {
