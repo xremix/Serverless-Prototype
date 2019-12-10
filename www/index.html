@@ -58,189 +58,184 @@
               <div class="dropdown-divider"></div>
               <form class="dropdown-item form-inline my-2 my-lg-0">
                 <input class="form-control mr-sm-2" type="search" id="search" placeholder="Search" aria-label="Search">
-                <button class="btn btn-outline-success my-2 my-sm-0" id="search-button" type="submit" onclick="search">Search</button>
+                <button class="btn btn-outline-success my-2 my-sm-0" id="search-button" onclick="searchCustomers()">Search</button>
               </form>
             </div>
           </li>
         </ul>
+      </div>
+    </div>
+  </nav>
+
+  <!-- Body -->
+  <div class="container mt-5">
+    <h1 id="title">Serverless Customer Portal</h1>
+    <div class="jumbotron">
+      <h2>Customers</h2>
+      <div class="result">
+        <p class="text-center" style="font-size:1.5em">
+          <i class="fa fa-spinner fa-spin" style="font-size:5em; color:#aaa;"></i><br/>
+          <b>Loading...</b><br/>
+          Loading customers from the database. Please wait a moment...
+        </p>
+      </div>
     </div>
   </div>
-</nav>
 
-<!-- Body -->
-<div class="container mt-5">
-  <h1 id="title">Serverless Customer Portal</h1>
-  <div class="jumbotron">
-    <h2>Customers</h2>
-    <div class="result">
+
+  <!-- Create Modal -->
+  <div class="modal fade" id="createModal" tabindex="-1" role="dialog" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title">Create Customer</h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+          <form id="createForm">
+            <div class="form-group row">
+              <label class="col-sm-2 col-form-label">ID</label>
+              <div class="col-sm-10">
+                <input type="text" class="form-control" id="inputID" placeholder="ID">
+              </div>
+            </div>
+            <div class="form-group row">
+              <label class="col-sm-2 col-form-label">Name</label>
+              <div class="col-sm-10">
+                <input type="text" class="form-control" id="inputName" placeholder="Customer Name">
+              </div>
+            </div>
+            <div class="form-group row">
+              <label class="col-sm-2 col-form-label">Address</label>
+              <div class="col-sm-10">
+                <input type="text" class="form-control" id="inputAddress" placeholder="Customer Address">
+              </div>
+            </div>
+            <div class="form-group row">
+              <label class="col-sm-2 col-form-label">City</label>
+              <div class="col-sm-10">
+                <input type="text" class="form-control" id="inputCity" placeholder="Customer City">
+              </div>
+            </div>
+            <div class="form-group row">
+              <label class="col-sm-2 col-form-label">Zip</label>
+              <div class="col-sm-10">
+                <input type="text" class="form-control" id="inputZip" placeholder="Customer Zip">
+              </div>
+            </div>
+            <div class="form-group row">
+              <label class="col-sm-2 col-form-label">Country</label>
+              <div class="col-sm-10">
+                <input type="text" class="form-control" id="inputCountry" placeholder="Customer Country">
+              </div>
+            </div>
+          </form>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-success" id="order-button" onclick="createCustomer()">Create</button>
+          <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Update Modal -->
+  <div class="modal fade" id="updateModal" tabindex="-1" role="dialog" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title">Update Customer</h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+
+          <form id="updateForm">
+            <div class="form-group row">
+              <label class="col-sm-2 col-form-label">ID</label>
+              <div class="col-sm-10">
+                <input type="text" class="form-control" id="inputID" placeholder="ID">
+              </div>
+            </div>
+            <div class="form-group row">
+              <label class="col-sm-2 col-form-label">Name</label>
+              <div class="col-sm-10">
+                <input type="text" class="form-control" id="inputName" placeholder="Customer Name">
+              </div>
+            </div>
+            <div class="form-group row">
+              <label class="col-sm-2 col-form-label">Address</label>
+              <div class="col-sm-10">
+                <input type="text" class="form-control" id="inputAddress" placeholder="Customer Address">
+              </div>
+            </div>
+            <div class="form-group row">
+              <label class="col-sm-2 col-form-label">City</label>
+              <div class="col-sm-10">
+                <input type="text" class="form-control" id="inputCity" placeholder="Customer City">
+              </div>
+            </div>
+            <div class="form-group row">
+              <label class="col-sm-2 col-form-label">Zip</label>
+              <div class="col-sm-10">
+                <input type="text" class="form-control" id="inputZip" placeholder="Customer Zip">
+              </div>
+            </div>
+            <div class="form-group row">
+              <label class="col-sm-2 col-form-label">Country</label>
+              <div class="col-sm-10">
+                <input type="text" class="form-control" id="inputCountry" placeholder="Customer Country">
+              </div>
+            </div>
+          </form>
+
+
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-success" id="order-button" onclick="updateCustomer()">Update</button>
+          <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div id="loading-modal" style="display:none">
+    <div class="content">
       <p class="text-center" style="font-size:1.5em">
         <i class="fa fa-spinner fa-spin" style="font-size:5em; color:#aaa;"></i><br/>
         <b>Loading...</b><br/>
-        Loading customer database
       </p>
     </div>
   </div>
-</div>
 
 
-<!-- Create Modal -->
-<div class="modal fade" id="createModal" tabindex="-1" role="dialog" aria-hidden="true">
-  <div class="modal-dialog" role="document">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h5 class="modal-title">Create Customer</h5>
-        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-          <span aria-hidden="true">&times;</span>
-        </button>
-      </div>
-      <div class="modal-body">
-        <form id="createForm">
-          <div class="form-group row">
-            <label class="col-sm-2 col-form-label">ID</label>
-            <div class="col-sm-10">
-              <input type="text" class="form-control" id="inputID" placeholder="ID">
-            </div>
-          </div>
-          <div class="form-group row">
-            <label class="col-sm-2 col-form-label">Name</label>
-            <div class="col-sm-10">
-              <input type="text" class="form-control" id="inputName" placeholder="Customer Name">
-            </div>
-          </div>
-          <div class="form-group row">
-            <label class="col-sm-2 col-form-label">Address</label>
-            <div class="col-sm-10">
-              <input type="text" class="form-control" id="inputAddress" placeholder="Customer Address">
-            </div>
-          </div>
-          <div class="form-group row">
-            <label class="col-sm-2 col-form-label">City</label>
-            <div class="col-sm-10">
-              <input type="text" class="form-control" id="inputCity" placeholder="Customer City">
-            </div>
-          </div>
-          <div class="form-group row">
-            <label class="col-sm-2 col-form-label">Zip</label>
-            <div class="col-sm-10">
-              <input type="text" class="form-control" id="inputZip" placeholder="Customer Zip">
-            </div>
-          </div>
-          <div class="form-group row">
-            <label class="col-sm-2 col-form-label">Country</label>
-            <div class="col-sm-10">
-              <input type="text" class="form-control" id="inputCountry" placeholder="Customer Country">
-            </div>
-          </div>
-        </form>
-      </div>
-      <div class="modal-footer">
-        <button type="button" class="btn btn-success" id="order-button" onclick="createCustomer()">Create</button>
-        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-      </div>
-    </div>
-  </div>
-</div>
+  <script src="https://code.jquery.com/jquery-3.4.1.min.js" integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo=" crossorigin="anonymous"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
+  <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
 
-<!-- Update Modal -->
-<div class="modal fade" id="updateModal" tabindex="-1" role="dialog" aria-hidden="true">
-  <div class="modal-dialog" role="document">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h5 class="modal-title">Update Customer</h5>
-        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-          <span aria-hidden="true">&times;</span>
-        </button>
-      </div>
-      <div class="modal-body">
+  <script type="text/javascript">
+  "use strict";
+  // Declarations
+  var customers = [];
+  var self = this;
+  var baseUrl = "https://sls-wus2-dev-serverless-prototype.azurewebsites.net";
 
-        <form id="updateForm">
-          <div class="form-group row">
-            <label class="col-sm-2 col-form-label">ID</label>
-            <div class="col-sm-10">
-              <input type="text" class="form-control" id="inputID" placeholder="ID">
-            </div>
-          </div>
-          <div class="form-group row">
-            <label class="col-sm-2 col-form-label">Name</label>
-            <div class="col-sm-10">
-              <input type="text" class="form-control" id="inputName" placeholder="Customer Name">
-            </div>
-          </div>
-          <div class="form-group row">
-            <label class="col-sm-2 col-form-label">Address</label>
-            <div class="col-sm-10">
-              <input type="text" class="form-control" id="inputAddress" placeholder="Customer Address">
-            </div>
-          </div>
-          <div class="form-group row">
-            <label class="col-sm-2 col-form-label">City</label>
-            <div class="col-sm-10">
-              <input type="text" class="form-control" id="inputCity" placeholder="Customer City">
-            </div>
-          </div>
-          <div class="form-group row">
-            <label class="col-sm-2 col-form-label">Zip</label>
-            <div class="col-sm-10">
-              <input type="text" class="form-control" id="inputZip" placeholder="Customer Zip">
-            </div>
-          </div>
-          <div class="form-group row">
-            <label class="col-sm-2 col-form-label">Country</label>
-            <div class="col-sm-10">
-              <input type="text" class="form-control" id="inputCountry" placeholder="Customer Country">
-            </div>
-          </div>
-        </form>
+  function showLoadingIndicator(){
+    $('#loading-modal').css('display', 'block');
+  }
+  function hideLoadingIndicator(){
+    $('#loading-modal').css('display', 'none');
+  }
 
+  function findCustomerById(id){
+    return customers.filter(c => c.id == id)[0];
+  }
 
-      </div>
-      <div class="modal-footer">
-        <button type="button" class="btn btn-success" id="order-button" onclick="updateCustomer()">Update</button>
-        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-      </div>
-    </div>
-  </div>
-</div>
-
-<div id="loading-modal" style="display:none">
-  <div class="content">
-    <p class="text-center" style="font-size:1.5em">
-      <i class="fa fa-spinner fa-spin" style="font-size:5em; color:#aaa;"></i><br/>
-      <b>Loading...</b><br/>
-    </p>
-  </div>
-</div>
-
-
-<script src="https://code.jquery.com/jquery-3.4.1.min.js" integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo=" crossorigin="anonymous"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
-<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
-
-<script type="text/javascript">
-"use strict";
-// Declarations
-var customers = [];
-var self = this;
-var baseUrl = "https://sls-wus2-dev-serverless-prototype.azurewebsites.net";
-
-function showLoadingIndicator(){
-  $('#loading-modal').css('display', 'block');
-}
-function hideLoadingIndicator(){
-  $('#loading-modal').css('display', 'none');
-}
-
-function findCustomerById(id){
-  return customers.filter(c => c.id == id)[0];
-}
-
-function loadCustomers(){
-  $.get( baseUrl + "/api/allCustomers", function( data ) {
-    data = JSON.parse(data);
-    console.log(data);
-
-    customers = data;
-    var html = data.map(c => `
+  function showCustomers(customers){
+    var html = customers.map(c => `
       <li>
       <p>
       <b>${c.id} - ${c.name}</b> <br/>
@@ -251,110 +246,135 @@ function loadCustomers(){
       `).join('');
       console.log(html);
       document.querySelector('.result').innerHTML = `<ul class="customer-list">${html}</ul>`;
-    });
+    };
 
-  }
 
-  function createCustomer(){
-    var body = {
-      id: parseInt(document.querySelector('#createForm #inputID').value),
-      name: document.querySelector('#createForm #inputName').value,
-      address: document.querySelector('#createForm #inputAddress').value,
-      city: document.querySelector('#createForm #inputCity').value,
-      zip: document.querySelector('#createForm #inputZip').value,
-      country: document.querySelector('#createForm #inputCountry').value
+    function loadCustomers(){
+      $.get(baseUrl + "/api/allCustomers", function(data){
+        data = JSON.parse(data);
+        console.log(data);
+
+        customers = data;
+        showCustomers(customers);
+      });
     }
 
-    if(!body.id || !body.name || !body.address || !body.city || !body.zip || !body.country){
-      alert("Please fill in all fields");
-      return;
+    function createCustomer(){
+      var body = {
+        id: parseInt(document.querySelector('#createForm #inputID').value),
+        name: document.querySelector('#createForm #inputName').value,
+        address: document.querySelector('#createForm #inputAddress').value,
+        city: document.querySelector('#createForm #inputCity').value,
+        zip: document.querySelector('#createForm #inputZip').value,
+        country: document.querySelector('#createForm #inputCountry').value
+      }
+
+      if(!body.id || !body.name || !body.address || !body.city || !body.zip || !body.country){
+        alert("Please fill in all fields");
+        return;
+      }
+
+      showLoadingIndicator();
+      $.ajax({
+        url: baseUrl + '/api/addCustomer',
+        type : "POST",
+        dataType : 'json',
+        data : JSON.stringify(body),
+        success : function(result) {
+          $('#createModal').modal('hide');
+          hideLoadingIndicator();
+          // alert('Success');
+          console.log(result);
+          location.reload();
+        },
+        error: function(xhr, resp, text) {
+          $('#createModal').modal('hide');
+          hideLoadingIndicator();
+          console.log(xhr, resp, text);
+          alert(text);
+        }
+      });
     }
 
-    showLoadingIndicator();
-    $.ajax({
-      url: baseUrl + '/api/addCustomer',
-      type : "POST",
-      dataType : 'json',
-      data : JSON.stringify(body),
-      success : function(result) {
-        $('#createModal').modal('hide');
-        hideLoadingIndicator();
-        // alert('Success');
-        console.log(result);
-        location.reload();
-      },
-      error: function(xhr, resp, text) {
-        $('#createModal').modal('hide');
-        hideLoadingIndicator();
-        console.log(xhr, resp, text);
-        alert(text);
-      }
-    });
-  }
-
-  function loadUpdateCustomer(id){
-    var customer = findCustomerById(id);
-    document.querySelector('#updateForm #inputID').value = customer.id;
-    document.querySelector('#updateForm #inputName').value = customer.name;
-    document.querySelector('#updateForm #inputAddress').value = customer.address;
-    document.querySelector('#updateForm #inputCity').value = customer.city;
-    document.querySelector('#updateForm #inputZip').value = customer.zip;
-    document.querySelector('#updateForm #inputCountry').value = customer.country;
-  }
-
-  function updateCustomer(){
-    var body = {
-      id: parseInt(document.querySelector('#updateForm #inputID').value),
-      name: document.querySelector('#updateForm #inputName').value,
-      address: document.querySelector('#updateForm #inputAddress').value,
-      city: document.querySelector('#updateForm #inputCity').value,
-      zip: document.querySelector('#updateForm #inputZip').value,
-      country: document.querySelector('#updateForm #inputCountry').value,
+    function loadUpdateCustomer(id){
+      var customer = findCustomerById(id);
+      document.querySelector('#updateForm #inputID').value = customer.id;
+      document.querySelector('#updateForm #inputName').value = customer.name;
+      document.querySelector('#updateForm #inputAddress').value = customer.address;
+      document.querySelector('#updateForm #inputCity').value = customer.city;
+      document.querySelector('#updateForm #inputZip').value = customer.zip;
+      document.querySelector('#updateForm #inputCountry').value = customer.country;
     }
 
-    showLoadingIndicator();
-    $.ajax({
-      url: baseUrl + '/api/editCustomer',
-      type : "POST",
-      dataType : 'json',
-      data : JSON.stringify(body),
-      success : function(result) {
-        $('#updateModal').modal('hide');
-        hideLoadingIndicator();
-        // alert('Success');
-        console.log(result);
-        location.reload();
-      },
-      error: function(xhr, resp, text) {
-        $('#updateModal').modal('hide');
-        hideLoadingIndicator();
-        console.log(xhr, resp, text);
-        alert(text);
+    function updateCustomer(){
+      var body = {
+        id: parseInt(document.querySelector('#updateForm #inputID').value),
+        name: document.querySelector('#updateForm #inputName').value,
+        address: document.querySelector('#updateForm #inputAddress').value,
+        city: document.querySelector('#updateForm #inputCity').value,
+        zip: document.querySelector('#updateForm #inputZip').value,
+        country: document.querySelector('#updateForm #inputCountry').value,
       }
-    });
-  }
 
-  function deleteCustomer(id){
-    showLoadingIndicator();
-    $.ajax({
-      url: baseUrl + '/api/deleteCustomer?id='+id,
-      type : "DELETE",
-      dataType : 'json',
-      success : function(result) {
+      showLoadingIndicator();
+      $.ajax({
+        url: baseUrl + '/api/editCustomer',
+        type : "POST",
+        dataType : 'json',
+        data : JSON.stringify(body),
+        success : function(result) {
+          $('#updateModal').modal('hide');
+          hideLoadingIndicator();
+          // alert('Success');
+          console.log(result);
+          location.reload();
+        },
+        error: function(xhr, resp, text) {
+          $('#updateModal').modal('hide');
+          hideLoadingIndicator();
+          console.log(xhr, resp, text);
+          alert(text);
+        }
+      });
+    }
+
+    function deleteCustomer(id){
+      showLoadingIndicator();
+      $.ajax({
+        url: baseUrl + '/api/deleteCustomer?id='+id,
+        type : "DELETE",
+        dataType : 'json',
+        success : function(result) {
+          hideLoadingIndicator();
+          console.log(result);
+          location.reload();
+        },
+        error: function(xhr, resp, text) {
+          hideLoadingIndicator();
+          console.log(xhr, resp, text);
+          alert(text);
+        }
+      });
+    }
+
+
+    function searchCustomers(){
+      showLoadingIndicator();
+      var q = $('#search').val();
+
+      $.get(baseUrl + "/api/findCustomers?q=" + q, function(data){
+        data = JSON.parse(data);
+        console.log(data);
+
+        customers = data;
+        showCustomers(customers);
         hideLoadingIndicator();
-        console.log(result);
-        location.reload();
-      },
-      error: function(xhr, resp, text) {
-        hideLoadingIndicator();
-        console.log(xhr, resp, text);
-        alert(text);
-      }
-    });
-  }
+      });
+      return false; // to prevent defaults
+    }
 
-  loadCustomers();
+    loadCustomers();
 
-</script>
-</body>
-</html>
+    </script>
+    </body>
+    </html>

@@ -90,7 +90,7 @@ var edit = function(cus, context) {
       });
     });
   };
-  
+
   var remove = function(id, context) {
     return mongoClient.getPromiseConnection(context, function(err, db, dbo, resolve, reject){
       if(err){return;}

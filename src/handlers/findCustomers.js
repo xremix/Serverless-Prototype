@@ -4,12 +4,27 @@ var functionService = require('./services/functionService');
 
 module.exports.handler = async function(context, req) {
   context.log('[findCustomers] recieved findCustomer requests');
-  functionService.callFunction(context, function(data){
+
+  if (!(req.query.q)) {
+    context.res = {
+      status: 400,
+      body: 'Please pass q as a query parameter',
+    };
+    return;
+  }
+
+  var query = req.query.q;
+
+  // I know this part makes not too much sense from an architectural standpoint, but this is for prototyping reasons to see how other functions can get called
+  await functionService.callFunction(context, function(data){
+    context.log(typeof data);
+    var filteredData = data.filter(c => c.name.toLowerCase().indexOf(query.toLowerCase()) >= 0);
+
     context.log('[findCustomers] recieved data');
     // success
     context.res = {
       status: 200,
-      body: data
+      body: filteredData
     }
   },
   function(error){
