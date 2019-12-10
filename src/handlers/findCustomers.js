@@ -18,9 +18,12 @@ module.exports.handler = async function(context, req) {
   // I know this part makes not too much sense from an architectural standpoint, but this is for prototyping reasons to see how other functions can get called
   await functionService.callFunction(context, function(data){
     context.log(typeof data);
+    context.log(data);
+    context.log('[findCustomer] Filtering data');
     var filteredData = data.filter(c => c.name.toLowerCase().indexOf(query.toLowerCase()) >= 0);
+    context.log('[findCustomer] data after filter');
+    context.log(data);
 
-    context.log('[findCustomers] recieved data');
     // success
     context.res = {
       status: 200,
