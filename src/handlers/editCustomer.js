@@ -16,13 +16,12 @@ module.exports.handler = async function (context, req) {
 
   context.log('[editCustomer] created customer, going to edit now');
   try {
-    // let resolve = await customerRepo.edit(cus, context);
-    let resolve = await customerRepo.remove(cus.id, context);
-    let resolve2 = await customerRepo.add(cus, context);
+    let removeResult = await customerRepo.remove(cus.id, context);
+    let addResult = await customerRepo.add(cus, context);
 
     context.res = {
       status: 200,
-      body: resolve2
+      body: addResult
     };
   }catch(error){
     context.log('Error occured while updating the customer');

@@ -82,7 +82,6 @@
     </div>
   </div>
 
-
   <!-- Create Modal -->
   <div class="modal fade" id="createModal" tabindex="-1" role="dialog" aria-hidden="true">
     <div class="modal-dialog" role="document">
@@ -152,7 +151,6 @@
           </button>
         </div>
         <div class="modal-body">
-
           <form id="updateForm">
             <div class="form-group row">
               <label class="col-sm-2 col-form-label">ID</label>
@@ -192,7 +190,6 @@
             </div>
           </form>
 
-
         </div>
         <div class="modal-footer">
           <button type="button" class="btn btn-success" id="order-button" onclick="updateCustomer()">Update</button>
@@ -210,7 +207,6 @@
       </p>
     </div>
   </div>
-
 
   <script src="https://code.jquery.com/jquery-3.4.1.min.js" integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo=" crossorigin="anonymous"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
@@ -247,7 +243,6 @@
       console.log(html);
       document.querySelector('.result').innerHTML = `<ul class="customer-list">${html}</ul>`;
     };
-
 
     function loadCustomers(){
       $.get(baseUrl + "/api/allCustomers", function(data){
@@ -357,7 +352,6 @@
       });
     }
 
-
     function searchCustomers(){
       showLoadingIndicator();
       var q = $('#search').val();
@@ -374,6 +368,6 @@
 
     loadCustomers();
 
-    </script>
-    </body>
-    </html>
+  </script>
+</body>
+</html>

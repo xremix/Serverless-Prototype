@@ -16,5 +16,4 @@ module.exports.handler = async function(context, req) {
       body: error
     };
   }
-
 };
